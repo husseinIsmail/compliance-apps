@@ -10,7 +10,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
@@ -20,7 +20,6 @@
     "noEmit": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "allowImportingTsExtensions": true,
     "types": ["vitest/globals"]
   },
