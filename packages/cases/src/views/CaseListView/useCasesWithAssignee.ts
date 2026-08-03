@@ -48,8 +48,8 @@ export const useCasesWithAssignee = () => {
 
     return casesQuery.data.cases.map((caseItem) => ({
       ...caseItem,
-      assignee_name: userMap[caseItem.assignee_id].name ?? 'Unknown',
-      active: userMap[caseItem.assignee_id].active ?? false,
+      assignee_name: userMap[caseItem.assignee_id]?.name ?? 'Unknown',
+      assignee_active: userMap[caseItem.assignee_id]?.active ?? false,
     }));
   }, [casesQuery.data, usersQuery.data]);
 

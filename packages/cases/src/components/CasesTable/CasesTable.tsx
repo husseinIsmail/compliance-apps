@@ -42,7 +42,7 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     renderCell: ({ row }) => (
       <Box
         component="span"
-        sx={{ color: row.active ? 'text.primary' : 'text.disabled' }}
+        sx={{ color: row.assignee_active ? 'text.primary' : 'text.disabled' }}
       >
         {row.assignee_name}
       </Box>
