@@ -3,8 +3,7 @@ import example from './example.json';
 import { users } from './users';
 import { cases } from './cases';
 
-import { GetCasesResponse } from '../api/cases';
-import { GetUsersResponse } from '../api/users';
+import { GetCasesResponse, buildCasesQueryString } from '../api/cases';
 
 export const casesHandler = ({
   request,
@@ -17,8 +16,8 @@ export const casesHandler = ({
   const page_number = url.searchParams.get('page_number');
   const raw_assignee_id = url.searchParams.get('assignee_id');
 
-  const page = parseInt(page_number as string, 10) || 1;
-  const size = parseInt(page_size as string, 10) || 25;
+  const page = Math.max(1, parseInt(page_number as string, 10) || 1);
+  const size = Math.max(1, parseInt(page_size as string, 10) || 25);
   const assignee_id = raw_assignee_id?.trim() || undefined;
 
   const filteredCases = assignee_id
@@ -27,17 +26,23 @@ export const casesHandler = ({
 
   const start = (page - 1) * size;
 
-  const assigneeQueryString = assignee_id ? `&assignee_id=${assignee_id}` : '';
+  const buildLink = (pageNumber: number) =>
+    `/api/cases?${buildCasesQueryString({
+      page_number: pageNumber,
+      page_size: size,
+      assignee_id,
+    })}`;
 
   if (start > filteredCases.length - 1) {
-    return HttpResponse.json({
+    const emptyBody: GetCasesResponse = {
       cases: [],
       total_count: 0,
       first: '',
       next: '',
       prev: '',
       self: '',
-    });
+    };
+    return HttpResponse.json(emptyBody);
   }
 
   const end = start + size;
@@ -46,19 +51,16 @@ export const casesHandler = ({
 
   const hasNext = end < filteredCases.length;
 
-  return HttpResponse.json({
+  const body: GetCasesResponse = {
     cases: casesArray,
     total_count: filteredCases.length,
-    first: `/api/cases?page_number=1${assigneeQueryString}`,
-    next: hasNext
-      ? `/api/cases?page_number=${page + 1}${assigneeQueryString}`
-      : '',
-    prev:
-      page > 1
-        ? `/api/cases?page_number=${page - 1}${assigneeQueryString}`
-        : '',
-    self: `/api/cases?page_number=${page}${assigneeQueryString}`,
-  } as GetCasesResponse);
+    first: buildLink(1),
+    next: hasNext ? buildLink(page + 1) : '',
+    prev: page > 1 ? buildLink(page - 1) : '',
+    self: buildLink(page),
+  };
+
+  return HttpResponse.json(body);
 };
 
 export const apiHandlers = [
@@ -67,7 +69,7 @@ export const apiHandlers = [
   }),
 
   http.get('/api/users', () => {
-    return HttpResponse.json(users as GetUsersResponse);
+    return HttpResponse.json(users);
   }),
 
   http.get('/api/cases', casesHandler),

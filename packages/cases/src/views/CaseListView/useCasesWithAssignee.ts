@@ -27,9 +27,9 @@ export const useCasesWithAssignee = () => {
   };
 
   const casesQuery = CasesApi.useGetCasesQuery({
-    page_number: paginationModel.page + 1,
-    page_size: paginationModel.pageSize,
-    assignee_id: assigneeFilter ?? undefined,
+    pageNumber: paginationModel.page + 1,
+    pageSize: paginationModel.pageSize,
+    assigneeId: assigneeFilter ?? undefined,
   });
 
   const usersQuery = UsersApi.useGetUsersQuery();

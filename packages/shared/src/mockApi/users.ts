@@ -1,6 +1,6 @@
-import { User } from '../api/users';
+import { GetUsersResponse } from '../api/users';
 
-export const users: User[] = [
+export const users: GetUsersResponse = [
   {
     identifier: 'ec42141b-7285-44c0-9b31-728c080d159e',
     name: 'Miss Julie Veum',

@@ -3,29 +3,28 @@ import { useQuery } from '@tanstack/react-query';
 import fetchTyped from '../../utils/fetchTyped';
 
 import { GetCasesResponse } from './types';
+import { buildCasesQueryString } from './queryString';
 
 export interface GetCasesParams {
-  page_number: number;
-  page_size: number;
-  assignee_id?: string;
+  pageNumber: number;
+  pageSize: number;
+  assigneeId?: string;
 }
 
 export const useGetCasesQuery = ({
-  page_number,
-  page_size,
-  assignee_id,
+  pageNumber,
+  pageSize,
+  assigneeId,
 }: GetCasesParams) => {
   return useQuery({
-    queryKey: ['cases', page_number, page_size, assignee_id],
+    queryKey: ['cases', pageNumber, pageSize, assigneeId],
     queryFn: () => {
-      const params = new URLSearchParams({
-        page_number: String(page_number),
-        page_size: String(page_size),
+      const queryString = buildCasesQueryString({
+        page_number: pageNumber,
+        page_size: pageSize,
+        assignee_id: assigneeId,
       });
-      if (assignee_id) {
-        params.set('assignee_id', assignee_id);
-      }
-      return fetchTyped<GetCasesResponse>(`/api/cases?${params}`, {});
+      return fetchTyped<GetCasesResponse>(`/api/cases?${queryString}`, {});
     },
   });
 };
