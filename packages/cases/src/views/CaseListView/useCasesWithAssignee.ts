@@ -1,29 +1,23 @@
-import { useMemo, useState } from 'react';
-import { GridPaginationModel } from '@mui/x-data-grid';
+import { useMemo } from 'react';
 import { CasesApi, UsersApi } from 'shared';
 
 import { CaseWithAssignee } from './types';
-
-const DEFAULT_PAGINATION_MODEL: GridPaginationModel = {
-  page: 0,
-  pageSize: 25,
-};
+import { usePaginationModel } from './usePaginationModel';
+import { useAssigneeFilter } from './useAssigneeFilter';
 
 export const useCasesWithAssignee = () => {
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(
-    DEFAULT_PAGINATION_MODEL,
-  );
-
-  const [assigneeFilter, setAssigneeFilter] = useState<string | null>(null);
+  const { paginationModel, setPaginationModel, resetPage } =
+    usePaginationModel();
+  const { assigneeFilter, setAssigneeFilter } = useAssigneeFilter();
 
   const handleAssigneeFilterChange = (assigneeId: string | null) => {
     setAssigneeFilter(assigneeId);
-    setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    resetPage();
   };
 
   const handleClearFilters = () => {
     setAssigneeFilter(null);
-    setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    resetPage();
   };
 
   const casesQuery = CasesApi.useGetCasesQuery({
