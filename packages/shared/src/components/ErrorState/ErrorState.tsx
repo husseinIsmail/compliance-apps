@@ -4,5 +4,5 @@ interface ErrorStateProps {
 
 export const ErrorState = ({ error }: ErrorStateProps) => {
   console.error(error?.message);
-  return <div>Error occured while fetching data.`</div>;
+  return <div>Error occurred while fetching data.</div>;
 };
