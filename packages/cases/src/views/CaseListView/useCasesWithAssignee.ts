@@ -13,14 +13,8 @@ export const useCasesWithAssignee = () => {
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>(
     DEFAULT_PAGINATION_MODEL,
   );
-  const [assigneeFilter, setAssigneeFilter] = useState<string | null>(null);
 
-  const casesQuery = CasesApi.useGetCasesQuery({
-    page_number: paginationModel.page + 1,
-    page_size: paginationModel.pageSize,
-    assignee_id: assigneeFilter ?? undefined,
-  });
-  const usersQuery = UsersApi.useGetUsersQuery();
+  const [assigneeFilter, setAssigneeFilter] = useState<string | null>(null);
 
   const handleAssigneeFilterChange = (assigneeId: string | null) => {
     setAssigneeFilter(assigneeId);
@@ -31,6 +25,14 @@ export const useCasesWithAssignee = () => {
     setAssigneeFilter(null);
     setPaginationModel((prev) => ({ ...prev, page: 0 }));
   };
+
+  const casesQuery = CasesApi.useGetCasesQuery({
+    page_number: paginationModel.page + 1,
+    page_size: paginationModel.pageSize,
+    assignee_id: assigneeFilter ?? undefined,
+  });
+
+  const usersQuery = UsersApi.useGetUsersQuery();
 
   const data = useMemo<CaseWithAssignee[]>(() => {
     if (!casesQuery.data || !usersQuery.data) {

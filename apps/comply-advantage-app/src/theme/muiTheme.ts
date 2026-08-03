@@ -4,7 +4,11 @@ import theme from './theme';
 
 const muiTheme = createTheme({
   palette: {
-    primary: { main: theme.colors.accent600 as string },
+    primary: {
+      main: theme.colors.accent600 as string,
+      dark: theme.colors.accent500 as string,
+      light: theme.colors.neutral700 as string,
+    },
     secondary: { main: theme.colors.brand500 as string },
     error: { main: theme.colors.negative500 as string },
     success: { main: theme.colors.positive500 as string },

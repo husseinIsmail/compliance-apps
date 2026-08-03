@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { UsersApi } from 'shared';
 
 import { CaseWithAssignee } from '../../views/CaseListView/types';
-import { STATUS_LABELS } from '../../views/CaseListView/consts';
+import { STATUS_COLORS, STATUS_LABELS } from '../../views/CaseListView/consts';
 import { CasesTableFilters } from './CasesTableFilters';
 
 interface CasesTableProps {
@@ -25,7 +25,14 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     field: 'status',
     headerName: 'Status',
     width: 150,
-    valueFormatter: (value: string) => STATUS_LABELS[value] ?? value,
+    renderCell: ({ row }) => (
+      <Box
+        component="span"
+        sx={{ color: STATUS_COLORS[row.status] ?? 'text.primary' }}
+      >
+        {STATUS_LABELS[row.status] ?? row.status}
+      </Box>
+    ),
   },
   {
     field: 'assignee_name',
