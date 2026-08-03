@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import MuiBox from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -24,7 +24,7 @@ export const CasesTableFilters = ({
   };
 
   return (
-    <Box
+    <MuiBox
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -54,6 +54,6 @@ export const CasesTableFilters = ({
       <Button onClick={onClearFilters} disabled={assigneeFilter === null}>
         Clear Filters
       </Button>
-    </Box>
+    </MuiBox>
   );
 };

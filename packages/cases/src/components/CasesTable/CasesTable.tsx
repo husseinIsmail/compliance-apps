@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import MuiBox from '@mui/material/Box';
 import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { UsersApi } from 'shared';
@@ -27,12 +27,12 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     width: 150,
     valueFormatter: (value: string) => STATUS_LABELS[value] ?? value,
     renderCell: ({ row }) => (
-      <Box
+      <MuiBox
         component="span"
         sx={{ color: STATUS_COLORS[row.status] ?? 'text.primary' }}
       >
         {STATUS_LABELS[row.status] ?? row.status}
-      </Box>
+      </MuiBox>
     ),
   },
   {
@@ -40,12 +40,12 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     headerName: 'Assignee',
     width: 180,
     renderCell: ({ row }) => (
-      <Box
+      <MuiBox
         component="span"
         sx={{ color: row.assignee_active ? 'text.primary' : 'text.disabled' }}
       >
         {row.assignee_name}
-      </Box>
+      </MuiBox>
     ),
   },
 ];
@@ -63,7 +63,7 @@ export const CasesTable = ({
 }: CasesTableProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <Box sx={{ height: 600, width: '100%' }}>
+      <MuiBox sx={{ height: 600, width: '100%' }}>
         <CasesTableFilters
           assigneeOptions={assigneeOptions}
           assigneeFilter={assigneeFilter}
@@ -81,7 +81,7 @@ export const CasesTable = ({
           pageSizeOptions={[10, 25, 50]}
           disableRowSelectionOnClick
         />
-      </Box>
+      </MuiBox>
     </ThemeProvider>
   );
 };
