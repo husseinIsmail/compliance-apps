@@ -40,7 +40,7 @@ export const casesHandler = ({
 
   return HttpResponse.json({
     cases: casesArray,
-    total_count: casesArray.length,
+    total_count: cases.length,
     first: '/api/cases?page_number=1',
     next: hasNext ? `/api/cases?page_number=${page + 1}` : '',
     prev: page > 1 ? `/api/cases?page_number=${page - 1}` : '',
