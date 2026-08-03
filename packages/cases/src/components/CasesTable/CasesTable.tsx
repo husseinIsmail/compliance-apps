@@ -25,6 +25,7 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     field: 'status',
     headerName: 'Status',
     width: 150,
+    valueFormatter: (value: string) => STATUS_LABELS[value] ?? value,
     renderCell: ({ row }) => (
       <Box
         component="span"
