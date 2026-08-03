@@ -1,10 +1,27 @@
+import { createTheme, Theme } from '@mui/material/styles';
 import { Box, Heading } from 'theme-ui';
 import { useCasesWithAssignee } from './useCasesWithAssignee';
 import { Loading, ErrorState } from 'shared';
-import CasesTable from '../../components/CasesTable/CasesTable';
+import { CasesTable } from '../../components/CasesTable/CasesTable';
 
-export const CaseListView = () => {
-  const { data: cases, isLoading, isError, error } = useCasesWithAssignee();
+interface CaseListViewProps {
+  muiTheme?: Theme;
+}
+
+const defaultMuiTheme = createTheme();
+
+export const CaseListView = ({
+  muiTheme = defaultMuiTheme,
+}: CaseListViewProps) => {
+  const {
+    data: cases,
+    isLoading,
+    isError,
+    error,
+    rowCount,
+    paginationModel,
+    onPaginationModelChange,
+  } = useCasesWithAssignee();
 
   if (isLoading) {
     return <Loading />;
@@ -17,7 +34,13 @@ export const CaseListView = () => {
   return (
     <Box>
       <Heading>Cases</Heading>
-      <CasesTable cases={cases}></CasesTable>
+      <CasesTable
+        cases={cases}
+        rowCount={rowCount}
+        paginationModel={paginationModel}
+        onPaginationModelChange={onPaginationModelChange}
+        muiTheme={muiTheme}
+      />
     </Box>
   );
 };
