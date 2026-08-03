@@ -15,13 +15,21 @@ export const casesHandler = ({
 
   const page_size = url.searchParams.get('page_size');
   const page_number = url.searchParams.get('page_number');
+  const raw_assignee_id = url.searchParams.get('assignee_id');
 
   const page = parseInt(page_number as string, 10) || 1;
   const size = parseInt(page_size as string, 10) || 25;
+  const assignee_id = raw_assignee_id?.trim() || undefined;
+
+  const filteredCases = assignee_id
+    ? cases.filter((caseItem) => caseItem.assignee_id === assignee_id)
+    : cases;
 
   const start = (page - 1) * size;
 
-  if (start > cases.length - 1) {
+  const assigneeQueryString = assignee_id ? `&assignee_id=${assignee_id}` : '';
+
+  if (start > filteredCases.length - 1) {
     return HttpResponse.json({
       cases: [],
       total_count: 0,
@@ -34,17 +42,22 @@ export const casesHandler = ({
 
   const end = start + size;
 
-  const casesArray = cases.slice(start, end);
+  const casesArray = filteredCases.slice(start, end);
 
-  const hasNext = end < cases.length;
+  const hasNext = end < filteredCases.length;
 
   return HttpResponse.json({
     cases: casesArray,
-    total_count: cases.length,
-    first: '/api/cases?page_number=1',
-    next: hasNext ? `/api/cases?page_number=${page + 1}` : '',
-    prev: page > 1 ? `/api/cases?page_number=${page - 1}` : '',
-    self: `/api/cases?page_number=${page}`,
+    total_count: filteredCases.length,
+    first: `/api/cases?page_number=1${assigneeQueryString}`,
+    next: hasNext
+      ? `/api/cases?page_number=${page + 1}${assigneeQueryString}`
+      : '',
+    prev:
+      page > 1
+        ? `/api/cases?page_number=${page - 1}${assigneeQueryString}`
+        : '',
+    self: `/api/cases?page_number=${page}${assigneeQueryString}`,
   } as GetCasesResponse);
 };
 

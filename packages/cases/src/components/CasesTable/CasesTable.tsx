@@ -1,9 +1,11 @@
 import Box from '@mui/material/Box';
 import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import { UsersApi } from 'shared';
 
 import { CaseWithAssignee } from '../../views/CaseListView/types';
 import { STATUS_LABELS } from '../../views/CaseListView/consts';
+import { CasesTableFilters } from './CasesTableFilters';
 
 interface CasesTableProps {
   cases: CaseWithAssignee[];
@@ -11,6 +13,10 @@ interface CasesTableProps {
   paginationModel: GridPaginationModel;
   onPaginationModelChange: (model: GridPaginationModel) => void;
   muiTheme: Theme;
+  assigneeOptions: UsersApi.User[];
+  assigneeFilter: string | null;
+  onAssigneeFilterChange: (assigneeId: string | null) => void;
+  onClearFilters: () => void;
 }
 
 const columns: GridColDef<CaseWithAssignee>[] = [
@@ -42,10 +48,20 @@ export const CasesTable = ({
   paginationModel,
   onPaginationModelChange,
   muiTheme,
+  assigneeOptions,
+  assigneeFilter,
+  onAssigneeFilterChange,
+  onClearFilters,
 }: CasesTableProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
       <Box sx={{ height: 600, width: '100%' }}>
+        <CasesTableFilters
+          assigneeOptions={assigneeOptions}
+          assigneeFilter={assigneeFilter}
+          onAssigneeFilterChange={onAssigneeFilterChange}
+          onClearFilters={onClearFilters}
+        />
         <DataGrid
           rows={cases}
           columns={columns}

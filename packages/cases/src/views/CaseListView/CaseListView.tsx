@@ -21,6 +21,10 @@ export const CaseListView = ({
     rowCount,
     paginationModel,
     onPaginationModelChange,
+    assigneeOptions,
+    assigneeFilter,
+    onAssigneeFilterChange,
+    onClearFilters,
   } = useCasesWithAssignee();
 
   if (isLoading) {
@@ -33,13 +37,24 @@ export const CaseListView = ({
 
   return (
     <Box>
-      <Heading>Cases</Heading>
+      <Heading
+        sx={{
+          fontSize: 'font-size-2xl',
+          fontWeight: 'font-weight-bold',
+        }}
+      >
+        Cases
+      </Heading>
       <CasesTable
         cases={cases}
         rowCount={rowCount}
         paginationModel={paginationModel}
         onPaginationModelChange={onPaginationModelChange}
         muiTheme={muiTheme}
+        assigneeOptions={assigneeOptions}
+        assigneeFilter={assigneeFilter}
+        onAssigneeFilterChange={onAssigneeFilterChange}
+        onClearFilters={onClearFilters}
       />
     </Box>
   );

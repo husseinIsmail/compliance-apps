@@ -57,6 +57,7 @@ const theme = makeTheme({
     'font-size-md': '14px',
     'font-size-lg': '16px',
     'font-size-xl': '18px',
+    'font-size-2xl': '24px',
   },
   fontWeights: {
     'font-weight-normal': 400,
