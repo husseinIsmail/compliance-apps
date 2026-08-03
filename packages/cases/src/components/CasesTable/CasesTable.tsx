@@ -21,7 +21,19 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     width: 150,
     valueFormatter: (value: string) => STATUS_LABELS[value] ?? value,
   },
-  { field: 'assignee_name', headerName: 'Assignee', width: 180 },
+  {
+    field: 'assignee_name',
+    headerName: 'Assignee',
+    width: 180,
+    renderCell: ({ row }) => (
+      <Box
+        component="span"
+        sx={{ color: row.active ? 'text.primary' : 'text.disabled' }}
+      >
+        {row.assignee_name}
+      </Box>
+    ),
+  },
 ];
 
 export const CasesTable = ({
@@ -33,7 +45,7 @@ export const CasesTable = ({
 }: CasesTableProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <Box sx={{ height: 400, width: '100%' }}>
+      <Box sx={{ height: 600, width: '100%' }}>
         <DataGrid
           rows={cases}
           columns={columns}
