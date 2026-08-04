@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { CasesApi, UsersApi } from 'shared';
 
 import { CaseWithAssignee } from '../../types';
+import { joinCasesWithAssignees } from '../../joinCaseWithAssignee';
 import { usePaginationModel } from '../../hooks/usePaginationModel';
 import { useAssigneeFilter } from '../../hooks/useAssigneeFilter';
 
@@ -33,18 +34,7 @@ export const useCasesWithAssignee = () => {
       return [];
     }
 
-    const userMap = Object.fromEntries(
-      usersQuery.data.map((user) => [
-        user.identifier,
-        { name: user.name, active: user.active },
-      ]),
-    );
-
-    return casesQuery.data.cases.map((caseItem) => ({
-      ...caseItem,
-      assignee_name: userMap[caseItem.assignee_id]?.name ?? 'Unknown',
-      assignee_active: userMap[caseItem.assignee_id]?.active ?? false,
-    }));
+    return joinCasesWithAssignees(casesQuery.data.cases, usersQuery.data);
   }, [casesQuery.data, usersQuery.data]);
 
   return {

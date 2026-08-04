@@ -8,11 +8,12 @@ export const buildMuiTheme = (tokens: CasesThemeTokens): Theme =>
       primary: {
         main: tokens.primaryColor,
         light: tokens.primaryColorLight,
-        dark: tokens.primaryColorDark,
       },
       secondary: { main: tokens.secondaryColor },
       error: { main: tokens.errorColor },
       success: { main: tokens.successColor },
+      info: { main: tokens.linkColor },
+      warning: { main: tokens.warningColor },
       text: { primary: tokens.textColor },
       background: { default: tokens.backgroundColor },
     },

@@ -1,5 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import { createTheme } from '@mui/material/styles';
+import { MemoryRouter } from 'react-router-dom';
 import { CasesTable } from './CasesTable';
 import { CaseWithAssignee } from '../../types';
 
@@ -16,16 +17,27 @@ const baseCase: CaseWithAssignee = {
 
 const renderTable = (cases: CaseWithAssignee[]) =>
   render(
-    <CasesTable
-      cases={cases}
-      rowCount={cases.length}
-      paginationModel={{ page: 0, pageSize: 25 }}
-      onPaginationModelChange={() => {}}
-      muiTheme={muiTheme}
-    />,
+    <MemoryRouter>
+      <CasesTable
+        cases={cases}
+        rowCount={cases.length}
+        paginationModel={{ page: 0, pageSize: 25 }}
+        onPaginationModelChange={() => {}}
+        muiTheme={muiTheme}
+      />
+    </MemoryRouter>,
   );
 
 describe('CasesTable', () => {
+  it('renders the case name as a link to its detail view', () => {
+    renderTable([{ ...baseCase, identifier: 'case-42', name: 'Test Case' }]);
+
+    expect(screen.getByRole('link', { name: 'Test Case' })).toHaveAttribute(
+      'href',
+      '/cases/case-42',
+    );
+  });
+
   it('renders the human-readable status label, not the raw enum', () => {
     renderTable([{ ...baseCase, status: 'CASE_RESOLVED_RISK_DETECTED' }]);
 

@@ -63,6 +63,18 @@ export const casesHandler = ({
   return HttpResponse.json(body);
 };
 
+export const caseHandler = ({ params }: { params: { id: string } }) => {
+  const foundCase = cases.find(
+    (caseItem) => caseItem.identifier === params.id,
+  );
+
+  if (!foundCase) {
+    return HttpResponse.json({ message: 'Case not found' }, { status: 404 });
+  }
+
+  return HttpResponse.json(foundCase);
+};
+
 export const apiHandlers = [
   http.get('/api/example', () => {
     return HttpResponse.json(example);
@@ -73,4 +85,6 @@ export const apiHandlers = [
   }),
 
   http.get('/api/cases', casesHandler),
+
+  http.get('/api/cases/:id', caseHandler),
 ];

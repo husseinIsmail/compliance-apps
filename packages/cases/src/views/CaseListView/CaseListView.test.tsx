@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
 import { server } from 'shared/src/mockApi/server';
 import { CaseListView } from './CaseListView';
@@ -15,7 +16,9 @@ const renderCaseListView = () => {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <CaseListView />
+      <MemoryRouter>
+        <CaseListView />
+      </MemoryRouter>
     </QueryClientProvider>,
   );
 };
@@ -50,10 +53,11 @@ describe('CaseListView', () => {
     renderCaseListView();
 
     await waitFor(() => {
-      screen.getByRole('heading', { level: 2, name: 'Cases' });
+      expect(
+        screen.getByRole('heading', { level: 2, name: 'Cases' }),
+      ).toBeInTheDocument();
+      expect(screen.getByText('Case One')).toBeInTheDocument();
     });
-
-    expect(screen.getByText('Case One')).toBeInTheDocument();
   });
 
   it('renders an error state when the cases request fails', async () => {
@@ -65,9 +69,7 @@ describe('CaseListView', () => {
     renderCaseListView();
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Something went wrong.'),
-      ).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
     });
   });
 
@@ -89,9 +91,7 @@ describe('CaseListView', () => {
     renderCaseListView();
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Something went wrong.'),
-      ).toBeInTheDocument();
+      expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
     });
   });
 });

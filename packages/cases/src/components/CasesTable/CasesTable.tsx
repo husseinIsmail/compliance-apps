@@ -1,6 +1,7 @@
 import MuiBox from '@mui/material/Box';
 import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
 
 import { CaseWithAssignee } from '../../types';
 import { STATUS_COLORS, STATUS_LABELS } from '../../consts';
@@ -14,7 +15,25 @@ interface CasesTableProps {
 }
 
 const columns: GridColDef<CaseWithAssignee>[] = [
-  { field: 'name', headerName: 'Name', width: 200, flex: 1 },
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 200,
+    flex: 1,
+    renderCell: ({ row }) => (
+      <MuiBox
+        component={Link}
+        to={`/cases/${row.identifier}`}
+        sx={{
+          color: 'info.main',
+          textDecoration: 'none',
+          '&:hover': { textDecoration: 'underline' },
+        }}
+      >
+        {row.name}
+      </MuiBox>
+    ),
+  },
   {
     field: 'status',
     headerName: 'Status',
