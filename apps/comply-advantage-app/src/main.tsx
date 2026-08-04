@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         path: 'cases/:caseId',
         element: (
           <Suspense fallback={<Loading />}>
-            <CaseDetailView />
+            <CaseDetailView themeTokens={caseListThemeTokens} />
           </Suspense>
         ),
       },

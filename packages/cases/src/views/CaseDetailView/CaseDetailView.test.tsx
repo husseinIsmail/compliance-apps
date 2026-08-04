@@ -51,7 +51,7 @@ describe('CaseDetailView', () => {
         screen.getByRole('heading', { level: 2, name: 'Case' }),
       ).toBeInTheDocument();
       expect(screen.getByText('Case One')).toBeInTheDocument();
-      expect(screen.getByText('Status: In Progress')).toBeInTheDocument();
+      expect(screen.getByText('In Progress')).toBeInTheDocument();
       expect(screen.getByText('Assignee: Alice')).toBeInTheDocument();
     });
   });

@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 
 import { CaseWithAssignee } from '../../types';
-import { STATUS_COLORS, STATUS_LABELS } from '../../consts';
+import { STATUS_COLORS, STATUS_ICONS, STATUS_LABELS } from '../../consts';
 
 interface CasesTableProps {
   cases: CaseWithAssignee[];
@@ -39,14 +39,23 @@ const columns: GridColDef<CaseWithAssignee>[] = [
     headerName: 'Status',
     width: 150,
     valueFormatter: (value: string) => STATUS_LABELS[value] ?? value,
-    renderCell: ({ row }) => (
-      <MuiBox
-        component="span"
-        sx={{ color: STATUS_COLORS[row.status] ?? 'text.primary' }}
-      >
-        {STATUS_LABELS[row.status] ?? row.status}
-      </MuiBox>
-    ),
+    renderCell: ({ row }) => {
+      const StatusIcon = STATUS_ICONS[row.status];
+      return (
+        <MuiBox
+          component="span"
+          sx={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 0.5,
+            color: STATUS_COLORS[row.status] ?? 'text.primary',
+          }}
+        >
+          {StatusIcon && <StatusIcon fontSize="small" />}
+          {STATUS_LABELS[row.status] ?? row.status}
+        </MuiBox>
+      );
+    },
   },
   {
     field: 'assignee_name',
