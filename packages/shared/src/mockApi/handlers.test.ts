@@ -141,4 +141,76 @@ describe('cases handler', () => {
       });
     });
   });
+
+  describe('when filtering by assignee_id', () => {
+    describe('when the filtered set spans multiple pages', () => {
+      it('paginates within the filtered set and preserves assignee_id on the next link', async () => {
+        const body = await fetchCases(
+          '?page_number=1&page_size=4&assignee_id=user-0',
+        );
+
+        const expectedCases = cases
+          .filter((c) => c.assignee_id === 'user-0')
+          .slice(0, 4);
+
+        expect(body).toEqual({
+          cases: expectedCases,
+          first: '/api/cases?page_number=1&page_size=4&assignee_id=user-0',
+          next: '/api/cases?page_number=2&page_size=4&assignee_id=user-0',
+          prev: '',
+          self: '/api/cases?page_number=1&page_size=4&assignee_id=user-0',
+          total_count: 10,
+        });
+      });
+
+      it('preserves assignee_id on both next and prev links from a middle page', async () => {
+        const body = await fetchCases(
+          '?page_number=2&page_size=4&assignee_id=user-0',
+        );
+
+        const expectedCases = cases
+          .filter((c) => c.assignee_id === 'user-0')
+          .slice(4, 8);
+
+        expect(body).toEqual({
+          cases: expectedCases,
+          first: '/api/cases?page_number=1&page_size=4&assignee_id=user-0',
+          next: '/api/cases?page_number=3&page_size=4&assignee_id=user-0',
+          prev: '/api/cases?page_number=1&page_size=4&assignee_id=user-0',
+          self: '/api/cases?page_number=2&page_size=4&assignee_id=user-0',
+          total_count: 10,
+        });
+      });
+    });
+
+    it('returns an empty result for an assignee_id that matches no cases', async () => {
+      const body = await fetchCases(
+        '?page_number=1&page_size=25&assignee_id=nonexistent-user',
+      );
+
+      expect(body).toEqual({
+        cases: [],
+        first: '',
+        next: '',
+        prev: '',
+        self: '',
+        total_count: 0,
+      });
+    });
+
+    it('ignores a blank/whitespace-only assignee_id and returns all cases', async () => {
+      const body = await fetchCases(
+        '?page_number=1&page_size=50&assignee_id=%20',
+      );
+
+      expect(body).toEqual({
+        cases: cases.slice(0, 50),
+        first: '/api/cases?page_number=1&page_size=50',
+        next: '',
+        prev: '',
+        self: '/api/cases?page_number=1&page_size=50',
+        total_count: 50,
+      });
+    });
+  });
 });
