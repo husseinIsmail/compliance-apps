@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 import { Box, Heading } from 'theme-ui';
 import { useCasesWithAssignee } from './useCasesWithAssignee';
 import { Loading, ErrorState } from 'shared';
 import { CasesTable } from '../../components/CasesTable/CasesTable';
+import { CasesTableFilters } from '../../components/CasesTable/CasesTableFilters';
 import { CasesThemeTokens, defaultCasesThemeTokens } from '../../theme/tokens';
 import { buildMuiTheme } from '../../theme/buildMuiTheme';
 
@@ -47,16 +49,20 @@ export const CaseListView = ({
       >
         Cases
       </Heading>
+      <ThemeProvider theme={muiTheme}>
+        <CasesTableFilters
+          assigneeOptions={assigneeOptions}
+          assigneeFilter={assigneeFilter}
+          onAssigneeFilterChange={onAssigneeFilterChange}
+          onClearFilters={onClearFilters}
+        />
+      </ThemeProvider>
       <CasesTable
         cases={cases}
         rowCount={rowCount}
         paginationModel={paginationModel}
         onPaginationModelChange={onPaginationModelChange}
         muiTheme={muiTheme}
-        assigneeOptions={assigneeOptions}
-        assigneeFilter={assigneeFilter}
-        onAssigneeFilterChange={onAssigneeFilterChange}
-        onClearFilters={onClearFilters}
       />
     </Box>
   );

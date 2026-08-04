@@ -11,10 +11,6 @@ interface CasesTableProps {
   paginationModel: GridPaginationModel;
   onPaginationModelChange: (model: GridPaginationModel) => void;
   muiTheme: Theme;
-  assigneeOptions: UsersApi.User[];
-  assigneeFilter: string | null;
-  onAssigneeFilterChange: (assigneeId: string | null) => void;
-  onClearFilters: () => void;
 }
 
 const columns: GridColDef<CaseWithAssignee>[] = [
@@ -54,20 +50,10 @@ export const CasesTable = ({
   paginationModel,
   onPaginationModelChange,
   muiTheme,
-  assigneeOptions,
-  assigneeFilter,
-  onAssigneeFilterChange,
-  onClearFilters,
 }: CasesTableProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
       <MuiBox sx={{ height: 600, width: '100%' }}>
-        <CasesTableFilters
-          assigneeOptions={assigneeOptions}
-          assigneeFilter={assigneeFilter}
-          onAssigneeFilterChange={onAssigneeFilterChange}
-          onClearFilters={onClearFilters}
-        />
         <DataGrid
           rows={cases}
           columns={columns}
