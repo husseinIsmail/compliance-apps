@@ -26,8 +26,7 @@ const columns: GridColDef<CaseWithAssignee>[] = [
         to={`/cases/${row.identifier}`}
         sx={{
           color: 'info.main',
-          textDecoration: 'none',
-          '&:hover': { textDecoration: 'underline' },
+          textDecoration: 'underline',
         }}
       >
         {row.name}
