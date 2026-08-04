@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import AppThemeProvider from '../src/theme/AppThemeProvider';
-import muiTheme from './theme/muiTheme';
+import caseListThemeTokens from './theme/caseListThemeTokens';
 import App from './components/App/App.tsx';
 import './styles-reset.css';
 
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         path: 'cases',
         element: (
           <Suspense fallback={<div>...</div>}>
-            <CaseListView muiTheme={muiTheme} />
+            <CaseListView themeTokens={caseListThemeTokens} />
           </Suspense>
         ),
       },

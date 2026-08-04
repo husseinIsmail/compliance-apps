@@ -12,9 +12,6 @@
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.2.0",
     "cases": "workspace:*",
     "shared": "workspace:*"
   }

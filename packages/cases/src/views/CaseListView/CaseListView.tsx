@@ -1,18 +1,20 @@
-import { createTheme, Theme } from '@mui/material/styles';
+import { useMemo } from 'react';
 import { Box, Heading } from 'theme-ui';
 import { useCasesWithAssignee } from './useCasesWithAssignee';
 import { Loading, ErrorState } from 'shared';
 import { CasesTable } from '../../components/CasesTable/CasesTable';
+import { CasesThemeTokens, defaultCasesThemeTokens } from '../../theme/tokens';
+import { buildMuiTheme } from '../../theme/buildMuiTheme';
 
 interface CaseListViewProps {
-  muiTheme?: Theme;
+  themeTokens?: CasesThemeTokens;
 }
 
-const defaultMuiTheme = createTheme();
-
 export const CaseListView = ({
-  muiTheme = defaultMuiTheme,
+  themeTokens = defaultCasesThemeTokens,
 }: CaseListViewProps) => {
+  const muiTheme = useMemo(() => buildMuiTheme(themeTokens), [themeTokens]);
+
   const {
     data: cases,
     isLoading,
