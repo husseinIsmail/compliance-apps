@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import fetchTyped from '../../utils/fetchTyped';
 
 import { GetCasesResponse } from './types';
-import { buildCasesQueryString } from './queryString';
+import { buildCasesQueryString } from './casesQueryString';
 
 export interface GetCasesParams {
   pageNumber: number;
