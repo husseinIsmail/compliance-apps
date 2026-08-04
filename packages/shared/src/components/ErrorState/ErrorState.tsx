@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
+
 interface ErrorStateProps {
   error: Error | null;
 }
 
 export const ErrorState = ({ error }: ErrorStateProps) => {
-  console.error(error?.message);
-  return <div>Error occurred while fetching data.</div>;
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
+  return <div>Something went wrong.</div>;
 };

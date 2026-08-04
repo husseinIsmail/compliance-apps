@@ -66,7 +66,7 @@ describe('CaseListView', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Error occurred while fetching data.'),
+        screen.getByText('Something went wrong.'),
       ).toBeInTheDocument();
     });
   });
@@ -90,7 +90,7 @@ describe('CaseListView', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Error occurred while fetching data.'),
+        screen.getByText('Something went wrong.'),
       ).toBeInTheDocument();
     });
   });
