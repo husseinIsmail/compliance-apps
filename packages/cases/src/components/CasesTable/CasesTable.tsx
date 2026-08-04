@@ -1,11 +1,9 @@
 import MuiBox from '@mui/material/Box';
 import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
-import { UsersApi } from 'shared';
 
-import { CaseWithAssignee } from '../../views/CaseListView/types';
+import { CaseWithAssignee } from '../../types';
 import { STATUS_COLORS, STATUS_LABELS } from '../../views/CaseListView/consts';
-import { CasesTableFilters } from './CasesTableFilters';
 
 interface CasesTableProps {
   cases: CaseWithAssignee[];

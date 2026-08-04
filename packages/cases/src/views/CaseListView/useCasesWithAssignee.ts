@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { CasesApi, UsersApi } from 'shared';
 
-import { CaseWithAssignee } from './types';
+import { CaseWithAssignee } from '../../types';
 import { usePaginationModel } from './usePaginationModel';
 import { useAssigneeFilter } from './useAssigneeFilter';
 
