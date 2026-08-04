@@ -45,12 +45,8 @@ export const CaseDetailView = ({
       >
         Case
       </Heading>
-      <Text sx={{ display: 'block', mt: 'spacing-md' }}>
-        {caseItem.name}
-      </Text>
-      <Text sx={{ display: 'block', mt: 'spacing-md', color: 'textMuted' }}>
-        {caseItem.identifier}
-      </Text>
+      <Text sx={{ display: 'block', mt: 'spacing-md' }}>{caseItem.name}</Text>
+
       <Text sx={{ display: 'block', mt: 'spacing-md' }}>
         Status:{' '}
         <ThemeProvider theme={muiTheme}>
