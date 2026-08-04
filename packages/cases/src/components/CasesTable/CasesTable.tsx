@@ -3,7 +3,7 @@ import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
 import { CaseWithAssignee } from '../../types';
-import { STATUS_COLORS, STATUS_LABELS } from '../../views/CaseListView/consts';
+import { STATUS_COLORS, STATUS_LABELS } from '../../consts';
 
 interface CasesTableProps {
   cases: CaseWithAssignee[];

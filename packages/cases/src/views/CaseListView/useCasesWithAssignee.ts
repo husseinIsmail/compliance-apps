@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { CasesApi, UsersApi } from 'shared';
 
 import { CaseWithAssignee } from '../../types';
-import { usePaginationModel } from './usePaginationModel';
-import { useAssigneeFilter } from './useAssigneeFilter';
+import { usePaginationModel } from '../../hooks/usePaginationModel';
+import { useAssigneeFilter } from '../../hooks/useAssigneeFilter';
 
 export const useCasesWithAssignee = () => {
   const { paginationModel, setPaginationModel, resetPage } =
