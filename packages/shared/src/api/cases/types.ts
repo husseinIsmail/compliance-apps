@@ -5,19 +5,11 @@ export interface Case {
   name: string;
 }
 
-export type GetCasesResponse = {
+export interface GetCasesResponse {
   cases: Case[];
   total_count: number;
   first: string;
   next: string;
   prev: string;
   self: string;
-};
-
-export interface User {
-  identifier: string;
-  name: string;
-  active: boolean;
 }
-
-export type GetUsersResponse = User[];

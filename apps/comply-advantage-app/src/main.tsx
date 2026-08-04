@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { Loading } from 'shared';
+
 import AppThemeProvider from '../src/theme/AppThemeProvider';
+import caseListThemeTokens from './theme/caseListThemeTokens';
 import App from './components/App/App.tsx';
 import './styles-reset.css';
 
@@ -11,6 +14,9 @@ import setupMocks from './mockApi/setupMocks';
 
 const CaseListView = React.lazy(() =>
   import('cases').then((module) => ({ default: module.CaseListView })),
+);
+const CaseDetailView = React.lazy(() =>
+  import('cases').then((module) => ({ default: module.CaseDetailView })),
 );
 const queryClient = new QueryClient();
 
@@ -22,8 +28,16 @@ const router = createBrowserRouter([
       {
         path: 'cases',
         element: (
-          <Suspense fallback={<div>...</div>}>
-            <CaseListView />
+          <Suspense fallback={<Loading />}>
+            <CaseListView themeTokens={caseListThemeTokens} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'cases/:caseId',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CaseDetailView themeTokens={caseListThemeTokens} />
           </Suspense>
         ),
       },
